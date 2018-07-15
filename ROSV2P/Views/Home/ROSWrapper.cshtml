@@ -1,0 +1,60 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html style="height:100%">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;" />
+    <meta charset="utf-8" />
+    <base target="_self" />
+    <title></title>
+    <style type="text/css">        
+        body{ overflow-x:hidden;overflow-y:hidden; }
+
+    </style>
+</head>
+<body id="textBody" onload="loaded()" style="height:100%">
+    <div style="height:100%; width:100%">
+        <iframe id="frmExternal" style="height:100%; width:100%" frameborder="0"> </iframe>
+    </div>
+    <script>
+
+if (window.addEventListener) {
+    window.addEventListener("message", this.recieveMessage, false);
+}
+else {
+    window.attachEvent("onmessage", this.recieveMessage);
+}
+
+function recieveMessage(evt) {
+    var oReturn = evt.data;
+    window.opener.updateFields(oReturn);
+    window.close();
+}
+
+function loaded()
+{
+    var appType = getUrlParameter('appType');
+    var DocumentId = getUrlParameter('DocumentId');
+    var colid = getUrlParameter('colid');
+    var Filename = getUrlParameter('Filename');
+    var vURL = getUrlParameter('vURL');
+    p_URL = vURL + appType + "&DocumentId=" + DocumentId + "&colid=" + colid + "&Filename=" + Filename;
+    document.getElementById('frmExternal').src = p_URL;
+};
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+
+    </script>
+</body>
+
+
+</html>

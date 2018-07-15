@@ -1,0 +1,90 @@
+﻿@model ROSV2P.Models.Declaration
+@{
+    ViewBag.Title = "Authentication";
+    Layout = "~/Views/Layout.cshtml";
+}
+@section head{
+<script src="~/Scripts/Datatable/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/Datatable/dataTables.select.min.js"></script>
+<script src="~/Scripts/Datatable/dataTables.buttons.min.js"></script>
+<script src="~/Scripts/Datatable/dataTables.checkboxes.min.js"></script>
+<script src="~/Scripts/search.js"></script>
+
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/css/Datatable/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/css/Datatable/select.dataTables.min.css" rel="stylesheet" />
+<link href="~/css/Datatable/buttons.dataTables.min.css" rel="stylesheet" />
+}
+<body>
+    <div class="container">
+        <div class="divSearch">
+            <h2>Search</h2>
+            <div class="divSubSearch">
+                <table>
+                    <tr>
+                        <td style="text-align:center;"><span style="color:red;">*<span></span></span><label id="lblSchTtpe">Search Type:</label></td>                        
+                        <td>@Html.DropDownListFor(model => model.ddSearchtype, new SelectList(new[] { " " }), new { @class = "form-control" })</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label id="lblFromdate">Date From:</label><br />                            
+                            <input type="text" class="form-control" id="txtFromDate" readonly placeholder="mm/dd/yyyy" />
+                        </td>
+                        <td>
+                            <label id="lblTodate">Date To:</label><br />
+                            <input type="text" class="form-control" id="txtToDate" readonly placeholder="mm/dd/yyyy" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label id="lblpolno">Policy Number:</label><br />
+                            <input type="text" class="form-control" id="txtPolicyno" placeholder="PolicyNo" />
+                        </td>
+                        <td>
+                            <label id="lblCOCD">COCD:</label><br />
+                            <input type="text" class="form-control" id="txtCOCD" placeholder="Company code" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label id="lblFname">First Name:</label><br />
+                            <input type="text" class="form-control" id="txtFname" placeholder="First name" />
+                        </td>
+                        <td>
+                            <label id="lblLname">Last Name:</label><br />
+                            <input type="text" class="form-control" id="txtLname" placeholder="Last name" />
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            <label id="lblSSN">SSN:</label><br />
+                            <input type="text" class="form-control" id="txtssn" placeholder="SSN" />
+                        </td>
+                        <td>
+                            <label id="lblbirthDate">Birth Date:</label><br />
+                            <input type="text" class="form-control" id="txtbirthDate" readonly placeholder="mm/dd/yyyy" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="float:right;"><button type="button" id="btnClear" class="btn btn-primary">Clear</button></td>
+                        <td><button type="button" id="btnSearch" class="btn btn-primary">Search</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="datatable">
+            <div class="tableContent unselectable" id="foo" unselectable="on" >
+                <table id="tblSource" class="display" cellspacing="0">
+                    <thead>
+                        <tr>                            
+                            <th>List of Work Items</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>    
+    <input type="hidden" value="@ViewBag.sUser" id="awdUser" />
+</body>
+

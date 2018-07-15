@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:intf="http://ag.aig.com" xmlns:wsi="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:impl="http://ag.aig.com" targetNamespace="http://ag.aig.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ag.aig.com">
+      <xsd:element name="sendIRRequestResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="sendIRRequestReturn" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="sendMVRRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="inputMVR" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="sendMVRRequestResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="sendMVRRequestReturn" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="sendIRRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="inputIR" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="sendMVRRequestResponse">
+    <wsdl:part name="parameters" element="impl:sendMVRRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="sendIRRequestResponse">
+    <wsdl:part name="parameters" element="impl:sendIRRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="sendIRRequestRequest">
+    <wsdl:part name="parameters" element="impl:sendIRRequest" />
+  </wsdl:message>
+  <wsdl:message name="sendMVRRequestRequest">
+    <wsdl:part name="parameters" element="impl:sendMVRRequest" />
+  </wsdl:message>
+  <wsdl:portType name="VBWSAgent">
+    <wsdl:operation name="sendIRRequest">
+      <wsdl:input name="sendIRRequestRequest" message="impl:sendIRRequestRequest" />
+      <wsdl:output name="sendIRRequestResponse" message="impl:sendIRRequestResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sendMVRRequest">
+      <wsdl:input name="sendMVRRequestRequest" message="impl:sendMVRRequestRequest" />
+      <wsdl:output name="sendMVRRequestResponse" message="impl:sendMVRRequestResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="VBWSAgentSoapBinding" type="impl:VBWSAgent">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="sendIRRequest">
+      <wsdlsoap:operation soapAction="sendIRRequest" />
+      <wsdl:input name="sendIRRequestRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sendIRRequestResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendMVRRequest">
+      <wsdlsoap:operation soapAction="sendMVRRequest" />
+      <wsdl:input name="sendMVRRequestRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sendMVRRequestResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="VBWSAgentService">
+    <wsdl:port name="VBWSAgent" binding="impl:VBWSAgentSoapBinding">
+      <wsdlsoap:address location="http://TUSAASAGLMID01.R1-Core.r1.aig.net:12016/VBWebServiceAgent/services/VBWSAgent" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

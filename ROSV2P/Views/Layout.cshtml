@@ -1,0 +1,60 @@
+﻿        
+<!DOCTYPE html>
+
+<html>
+<head>    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />    
+    <META Http-Equiv="Cache-Control" Content="no-cache">
+    <META Http-Equiv="Pragma" Content="no-cache">
+    <META Http-Equiv="Expires" Content="0">   
+    <title>@Page.Title</title>
+    @*----CSS----*@
+    <link href="~/Scripts/Vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/Rosv2p.css" rel="stylesheet" />
+
+    @*-----Js----  *@
+    <script src="~/scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/scripts/tether.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>    
+    <script src="~/scripts/bootstrap.min.js"></script>    
+    <script src="~/Scripts/datepicker.js"></script>
+    <script src="~/scripts/bootbox.min.js"></script>    
+    
+    <script language="javascript">
+    /* IE11 Fix for SP2010 */
+    if (typeof(UserAgentInfo) != 'undefined' && !window.addEventListener)
+    {
+        UserAgentInfo.strBrowser=1;
+    }
+    </script>
+
+    @RenderSection("head", required: false)
+</head>
+<body>         
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="navbar-header">
+                    <div class="row">
+                        <div class="col-md-2"><img src="~/logo/aiglogo.png" class="bg-logo" /></div>
+                        <div class="col-md-4">@Html.Label("Name: ", htmlAttributes: new { @class = "padName", @id = "lbluname" })@Html.Label("Applicant Name", htmlAttributes: new { @id = "lbluser", @class = "fontWhite" })</div>
+                        <div class="col-md-3">@Html.Label("Policy: ", htmlAttributes: new { @class = "padName", @id = "lblpol" })@Html.Label("Policy Number", htmlAttributes: new { @id = "lblPolicyNum", @class = "fontWhite" })</div>
+                        <div class="col-md-1"></div>
+                        <div class="logOut"></div>
+                    </div>
+
+                    </div>
+                    @*@Html.Label("Name: ", htmlAttributes: new { @class = "padName", @id = "lbluname" })@Html.Label("Applicant Name", htmlAttributes: new { @id = "lbluser", @class = "fontWhite" })
+            @Html.Label("Policy: ", htmlAttributes: new { @class = "paddLeft", @id = "lblpol" })
+            @Html.Label("Policy Number", htmlAttributes: new { @id = "lblPolicyNum", @class = "fontWhite" })*@
+                    
+            </nav>
+            @RenderBody()
+        @*<div class="blockquote-footer fixed-bottom">
+            <div class="container">
+                <p>&#64;Copyright 2017. American International Group</p>
+            </div>
+        </div>*@         
+</body>
+</html>

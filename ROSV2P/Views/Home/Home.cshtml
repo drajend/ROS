@@ -1,0 +1,493 @@
+﻿@model ROSV2P.Models.Declaration
+@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Layout.cshtml";
+}
+@section head{    
+<script src="~/Scripts/Datatable/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/Datatable/dataTables.select.min.js"></script>
+<script src="~/Scripts/Datatable/dataTables.buttons.min.js"></script>
+<script src="~/Scripts/Datatable/dataTables.checkboxes.min.js"></script>
+<script src="~/Scripts/ROS.js"></script>
+
+<link href="~/css/jquery-ui.css" rel="stylesheet" />
+<link href="~/css/Datatable/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/css/Datatable/select.dataTables.min.css" rel="stylesheet" />
+<link href="~/css/Datatable/buttons.dataTables.min.css" rel="stylesheet" />
+
+}
+<script type="text/javascript">
+    var lstSelected = null;
+    function sourceListSelection(currentSelection) {        
+        var flag = 0;        
+        for (var j = 0; j <= 100; j++) {            
+            if (currentSelection != j) {
+                $('#chk' + j + '').prop('checked', false);
+                //if ($('#chk' + j + '').prop('checked') == true) {
+                //    flag++;
+                //    if (flag == 1)
+                //        if (lstSelected == null) {
+                //            lstSelected = j;
+                //        }
+                //        else {
+                //            $('#chk' + lstSelected + '').prop('checked', false);
+                //            lstSelected = j;
+                //        }
+                //}
+            }
+        }
+    }
+</script>
+<body>
+        <div class="container">
+            <div id="menuTab">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Main</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#tab2" role="tab">Applicant</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab3" role="tab">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab4" role="tab">Doctor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab5" role="tab">Authorization</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab6" role="tab">Additional Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab7" role="tab">Additional Reports and Supplements</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab8" role="tab">Order</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content" role="tablist">
+                <div class="tab-pane fade active show" id="tab1" role="tabpanel">
+                    <h4 style="padding-top:3px;padding-left:20px;">Requirements Being Ordered</h4>
+                    <table>
+                        <tr>
+                            <td colspan="2" class="trAlign">
+                                <label class="form-check-label">
+                                    @Html.CheckBoxFor(model => model.chkAPSEMSI, new { @class = "form-check-input" })
+                                    @Html.LabelFor(m => m.chkAPSEMSI, new { @id = "lblchkAPSEMSI" })
+                                </label>
+                            </td>                            
+                            <td>@Html.LabelFor(model => model.txtPolicyNo, htmlAttributes: new { @id = "labelPolicyNo" })</td>
+                            <td>@Html.LabelFor(model => model.txtPolicyAmount, htmlAttributes: new { @id = "labelPolicyAmount" })</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-left:35px;">
+                                <label class="form-check-label">
+                                    @Html.CheckBoxFor(model => model.chkAPSdbSheet, new { @class = "form-check-input" })
+                                    @Html.LabelFor(Model => Model.chkAPSdbSheet, new { @id = "lblAPSdbsheet" })
+                                </label>
+                            </td>                                                       
+                            <td>@Html.TextBoxFor(model => model.txtPolicyNo, new { @readonly = "readonly", @class = "form-control" })</td>
+                            <td>@Html.TextBoxFor(model => model.txtPolicyAmount, new { @class = "form-control", @placeholder = "Enter Policy Amount" })</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="outside">
+                                    <div class="divborder">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2">Agent Error Validation</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>@Html.LabelFor(model => model.txtAgentNumber, htmlAttributes: new { @id = "lblAgentNo" })</td>
+                                                    <td>@Html.TextBoxFor(model => model.txtAgentNumber, new { @class = "form-control" })</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <label class="form-check-label">
+                                                            @Html.CheckBoxFor(model => model.chkAPSAgentError, new { @class = "form-check-input" })
+                                                            @Html.LabelFor(model => model.chkAPSAgentError)
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>                            
+                        </tr>
+                        <tr style="display:none">
+                            <td class="trAlign">
+                                <label class="form-check-label">
+                                    @Html.CheckBoxFor(model => model.chkMVR, new { @class = "form-check-input" })
+                                    @Html.LabelFor(m => m.chkMVR)
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="trAlign">
+                                <label class="form-check-label">
+                                    @Html.CheckBoxFor(model => model.chkIR, new { @class = "form-check-input" })
+                                    @Html.LabelFor(m => m.chkIR, htmlAttributes: new { @id = "lblChkIR" })
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="trAlign" style="padding-left:35px;">
+                                <label class="form-check-label">
+                                    @Html.CheckBoxFor(model => model.chkIRcoverSheet, new { @class = "form-check-input" })
+                                    @Html.LabelFor(Model => Model.chkIRcoverSheet)
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="trAlign">
+                                <label class="form-check-label">
+                                    @Html.CheckBoxFor(model => model.chkAHinspection, new { @class = "form-check-input" })
+                                    @Html.LabelFor(m => m.chkAHinspection, htmlAttributes: new { @id = "lblChkAHinspct" })
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="outside">
+                                    <div class="divsubborder">   
+                                        <div class="radio">
+                                            <label>@Html.RadioButtonFor(model => model.rdCreditEsearch, "1")@Html.LabelFor(model => model.rdCreditName)</label>
+                                        </div>
+                                        <div class="radio">                                            
+                                            <label>@Html.RadioButtonFor(model => model.rdCreditEsearch, "2")@Html.LabelFor(model => model.rdEsearchName)</label>
+                                        </div>                                                                                
+                                    </div>                                    
+                                </div>
+                            </td>
+                            <td><input type="button" value="Clear Selection" style="visibility:hidden" class="btn btn-primary" /></td>
+                        </tr>
+                        <tr style="visibility:hidden"><td>Alignmentissue</td></tr>
+                        <tr>
+                            <td colspan="1">                                
+                                @Html.Label("*denotes a required fields",new { @class= "padding" })
+                            </td>                            
+                            <td colspan="2"><input type="button" value="Clear Selected Requirements" id="btnClear" class="btn btn-primary" /></td>
+                            <td></td>
+                            <td><input type="button" value="Cancel" id="btnCanceltab1" class="btn btn-primary" /></td>
+                            <td><input type="button" value="Next" id="btnNexttab1" data-id="1" class="btn btn-primary" /></td>
+                        </tr>
+                    </table>
+                </div>                    
+                    <div class="tab-pane fade" id="tab2" role="tabpanel">
+                        <div class="divApplicant">
+                            <div class="appTable">
+                                <table>
+                                    <tr id="SuffixField">
+                                        <td>@Html.LabelFor(model => model.txtAppPrefix, htmlAttributes: new { @id = "lblAppPrefix" })<br />@Html.TextBoxFor(model => model.txtAppPrefix, new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.txtAppFname, htmlAttributes: new { @id = "lblAppFname" })<br />@Html.TextBoxFor(model => model.txtAppFname, new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.txtAppMiddlename, htmlAttributes: new { @id = "lblAppMiddlename" })<br />@Html.TextBoxFor(model => model.txtAppMiddlename, new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.txtAppLname, htmlAttributes: new { @id = "lblAppLname" })<br />@Html.TextBoxFor(model => model.txtAppLname, new { @class = "form-control" })</td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.LabelFor(model => model.txtAppssn, htmlAttributes: new { @id = "lblAppssn" })<br />@Html.TextBoxFor(model => model.txtAppssn, new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.txtAppBirthDay, htmlAttributes: new { @id = "lblAppBirthDay" })<br />@Html.TextBoxFor(model => model.txtAppBirthDay, new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.txtAppDriverLicNo, htmlAttributes: new { @id = "lblAppDriverLicNo" })<br />@Html.TextBoxFor(model => model.txtAppDriverLicNo, new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.ddAppDriverLicState, htmlAttributes: new { @id = "lblAppDriverLicState" })<br />@Html.DropDownListFor(model => model.ddAppDriverLicState, new SelectList(new[] { " " }), new { @class = "form-control" }) </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">@Html.LabelFor(model => model.txtAppAddressFirst, htmlAttributes: new { @id = "lblAppAddressFirst" })<br />@Html.TextBoxFor(model => model.txtAppAddressFirst, htmlAttributes: new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.ddAppGender, htmlAttributes: new { @id = "lblAppGender" })<br />@Html.DropDownListFor(model => model.ddAppGender, new SelectList(new[] { " " }), new { @class = "form-control" })</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">@Html.TextBoxFor(model => model.txtAppAddressSecond, htmlAttributes: new { @class = "form-control" })</td>
+                                        <td rowspan="2">@Html.LabelFor(model => model.ddAppMaritalStatus, htmlAttributes: new { @id = "lblAppMaritalStatus" })<br />@Html.DropDownListFor(model => model.ddAppMaritalStatus, new SelectList(new[] { " " }), new { @class = "form-control" })</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">@Html.TextBoxFor(model => model.txtAppAddressThird, htmlAttributes: new { @class = "form-control" })</td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.LabelFor(model => model.txtAppCity, htmlAttributes: new { @id = "lblAppCity" })<br />@Html.TextBoxFor(model => model.txtAppCity, new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.ddAppState, htmlAttributes: new { @id = "lblAppState" })<br />@Html.DropDownListFor(model => model.ddAppState, new SelectList(new[] { " " }), new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.txtAppZip, htmlAttributes: new { @id = "lblAppZip" })<br />@Html.TextBoxFor(model => model.txtAppZip, new { @class = "form-control" })</td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.LabelFor(model => model.txtAppHomePhone, htmlAttributes: new { @id = "lblAppHomePhone" })<br />@Html.TextBoxFor(model => model.txtAppHomePhone, new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.txtAppWorkPhone, htmlAttributes: new { @id = "lblAppWorkPhone" })<br />@Html.TextBoxFor(model => model.txtAppWorkPhone, new { @class = "form-control" })</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="divCancelbutton">
+                                <input type="button" value="Cancel" id="btnCanceltab2" class="btn btn-primary" />
+                                <input type="button" value="Previous" id="btnPrevtab2" data-id="0" class="btn btn-primary" />
+                                <input type="button" value="Next" id="btnNexttab2" data-id="2" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab3" role="tabpanel">
+                        <div class="divContact">
+                            <table>
+                                <tr>
+                                    <td class="paddingtd">@Html.LabelFor(model => model.txtConRequestorName, new { @id = "lblReqName" })<br />@Html.TextBoxFor(model => model.txtConRequestorName, new { @class = "form-control Txtwidth" })</td>
+                                    <td class="paddingtd">@Html.LabelFor(model => model.txtConRequestorPhone, new { @id = "lblReqPhone" })<br />@Html.TextBoxFor(model => model.txtConRequestorPhone, new { @class = "form-control Txtwidth" })</td>
+                                    <td class="paddingtd">@Html.LabelFor(model => model.txtConRequestorEmail, new { @id = "lblReqEmail" })<br />@Html.TextBoxFor(model => model.txtConRequestorEmail, new { @class = "form-control Txtwidth" })</td>
+                                </tr>
+                            </table>
+                            <div class="paddingtr">
+                                @Html.Label("instruction", "If the vendor should contact someone other than the Requestor for additional information, you may provide that contact information in the fields below (ex. Agent, Producer Care Center, etc):")
+                            </div>
+                            <div class="divOtherContact">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">OTHER CONTACT</legend>
+                                    <table>
+                                        <tr>
+                                            <td>@Html.LabelFor(model => model.txtConFirstName, new { @id = "lblConFirstName" })<br />@Html.TextBoxFor(model => model.txtConFirstName, new { @class = "form-control" })</td>
+                                            <td>@Html.LabelFor(model => model.txtConMiddleName, new { @id = "lblConMiddleName" })<br />@Html.TextBoxFor(model => model.txtConMiddleName, new { @class = "form-control" })</td>
+                                            <td>@Html.LabelFor(model => model.txtConLastName, new { @id = "lblConLastName" })<br />@Html.TextBoxFor(model => model.txtConLastName, new { @class = "form-control" })</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@Html.LabelFor(model => model.txtConPhone, new { @id = "lblConPhone" })<br />@Html.TextBoxFor(model => model.txtConPhone, new { @class = "form-control" })</td>
+                                            <td colspan="2">@Html.LabelFor(model => model.txtConEmail, new { @id = "lblConEmail" })<br />@Html.TextBoxFor(model => model.txtConEmail, new { @class = "form-control" })</td>
+                                        </tr>
+                                    </table>
+                                </fieldset>
+                            </div>
+                            <div class="divCancelbutton">
+                                <input type="button" value="Cancel" id="btnCanceltab3" class="btn btn-primary" />
+                                <input type="button" value="Previous" id="btnPrevtab3" data-id="1" class="btn btn-primary" />
+                                <input type="button" value="Next" id="btnNexttab3" data-id="3" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab4" role="tabpanel">
+                        <div class="divDoctor">
+                            <table>
+                                <tr>
+                                    <td colspan="2">@Html.LabelFor(model => model.txtDocClinicName, new { @id = "lblDocClininame" })<br />@Html.TextBoxFor(model => model.txtDocClinicName, new { @class = "form-control txtAddress" })</td>
+                                    <td>@Html.LabelFor(model => model.txtDocPatientNumber, new { @id = "lblDocpatientNo" })<br />@Html.TextBoxFor(model => model.txtDocPatientNumber, new { @class = "form-control" })</td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.LabelFor(model => model.txtDocFirstName, new { @id = "lblDocfname" })<br />@Html.TextBoxFor(model => model.txtDocFirstName, new { @class = "form-control" })</td>
+                                    <td>@Html.LabelFor(model => model.txtDocLastName, new { @id = "lblDocLname" })<br />@Html.TextBoxFor(model => model.txtDocLastName, new { @class = "form-control" })</td>
+                                    <td>@Html.LabelFor(model => model.txtDocPhone, new { @id = "lblDocPhone" })<br />@Html.TextBoxFor(model => model.txtDocPhone, new { @class = "form-control" })</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">@Html.LabelFor(model => model.txtDocAddress1, new { @id = "lblDocAddress1" })<br />@Html.TextBoxFor(model => model.txtDocAddress1, new { @class = "form-control txtAddress" })</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">@Html.TextBoxFor(model => model.txtDocAddress2, new { @class = "form-control txtAddress", })</td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.LabelFor(model => model.txtDocCity, new { @id = "lblDocCity" })<br />@Html.TextBoxFor(model => model.txtDocCity, new { @class = "form-control" })</td>
+                                    <td>@Html.LabelFor(model => model.ddDocState, new { @id = "lblDocState" })<br />@Html.DropDownListFor(model => model.ddDocState, new SelectList(new[] { " " }), new { @class = "form-control" })</td>
+                                    <td>@Html.LabelFor(model => model.txtDocZip, new { @id = "lblDocZip" })<br />@Html.TextBoxFor(model => model.txtDocZip, new { @class = "form-control" })</td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.LabelFor(model => model.lstboxDocInstruction, htmlAttributes: new { @id = "lblDocInstruction" })</td>
+                                </tr>
+                            </table>
+                            <table>
+                                <tr>
+                                    <td rowspan="2" colspan="3">@Html.ListBoxFor(m => m.lstboxDocInstruction, new SelectList(new[] { "Please provide 5 year history of medical records, including EKG, lab results, charts, etc and all records available at your facility, including Special Attention history (if indicated)." }), new { @class = "form-control" })</td>
+                                    <td><input type="button" value="Add Line" id="btnDocAddline" data-toggle="modal" data-target="#myModal" class="btn btn-primary" /></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="button" value="Delete Line" id="btnDocDeleteLine" class="btn btn-primary" /></td>
+                                </tr>
+                            </table>
+                            <div class="divCancelbutton">
+                                <input type="button" value="Cancel" id="btnCanceltab4" class="btn btn-primary" />
+                                <input type="button" value="Previous" id="btnPrevtab4" data-id="2" class="btn btn-primary" />
+                                <input type="button" value="Next" id="btnNexttab4" data-id="4" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab5" role="tabpanel">
+                        <div class="Maindiv">
+                            <div class="divAuthorization">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            @Html.Label("selectSource", "To select the source containing the Authorization Form, place a check in the checkbox corresponding to the source.")
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            @Html.LabelFor(model => model.chkAuthSource1, new { @id = "lblAutSource" })<br />
+                                            <div class="chkBoxWidth">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="divCancelbutton">
+                                <input type="button" value="Cancel" id="btnCanceltab5" class="btn btn-primary" />
+                                <input type="button" value="Previous" id="btnPrevtab5" data-id="3" class="btn btn-primary" />
+                                <input type="button" value="Next" id="btnNexttab5" data-id="5" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab6" role="tabpanel">
+                        <div class="Maindiv">
+                            <div class="divAdditionalInfo">
+                                <table>
+                                    <tr>
+                                        <td colspan="2">@Html.LabelFor(model => model.txtAddEmpName, htmlAttributes: new { @id = "lblAddEmpName" })<br />@Html.TextBoxFor(model => model.txtAddEmpName, htmlAttributes: new { @class = "form-control AddNamebox" })</td>
+                                        <td></td>
+                                        <td colspan="2">@Html.LabelFor(model => model.txtAddOccupation, htmlAttributes: new { @id = "lblAddOccupation" })<br />@Html.TextBoxFor(model => model.txtAddOccupation, htmlAttributes: new { @class = "form-control AddZipbox" })</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">@Html.LabelFor(model => model.txtAddAddress1, htmlAttributes: new { @id = "lblAddAddress1" })<br />@Html.TextBoxFor(model => model.txtAddAddress1, htmlAttributes: new { @class = "form-control AddAddressbox" })</td>
+                                        <td colspan="2">@Html.LabelFor(model => model.txtAddPhone, htmlAttributes: new { @id = "lblAddPhone" })<br />@Html.TextBoxFor(model => model.txtAddPhone, htmlAttributes: new { @class = "form-control AddZipbox" })</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">@Html.LabelFor(model => model.txtAddAddress2, htmlAttributes: new { @id = "lblAddAddress2" })<br />@Html.TextBoxFor(model => model.txtAddAddress2, htmlAttributes: new { @class = "form-control AddAddressbox" })</td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">@Html.LabelFor(model => model.txtAddCity, htmlAttributes: new { @id = "lblAddCity" })<br />@Html.TextBoxFor(model => model.txtAddCity, htmlAttributes: new { @class = "form-control AddNamebox" })</td>
+                                        <td>@Html.LabelFor(model => model.ddAddState, htmlAttributes: new { @id = "lblAddState" })<br />@Html.DropDownListFor(model => model.ddAddState, new SelectList(new[] { "<--Select-->" }), new { @class = "form-control" })</td>
+                                        <td colspan="2">@Html.LabelFor(model => model.txtAddZip, htmlAttributes: new { @id = "lblAddZip" })<br />@Html.TextBoxFor(model => model.txtAddZip, htmlAttributes: new { @class = "form-control AddZipbox" })</td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.LabelFor(model => model.txtAddBenificiaryFname, htmlAttributes: new { @id = "lblAddBenificiaryFname" })<br />@Html.TextBoxFor(model => model.txtAddBenificiaryFname, new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.txtAddBenificiaryMname, htmlAttributes: new { @id = "lblAddBenificiaryMname" })<br />@Html.TextBoxFor(model => model.txtAddBenificiaryMname, new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.txtAddBenificiaryLname, htmlAttributes: new { @id = "lblAddBenificiaryLname" })<br />@Html.TextBoxFor(model => model.txtAddBenificiaryLname, new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.ddAddbeneficiarySuf, htmlAttributes: new { @id = "lblAddBenificiarySuf" })<br />@Html.DropDownListFor(model => model.ddAddbeneficiarySuf, new SelectList(new[] { "<--Select-->" }), new { @class = "form-control" })</td>
+                                        <td>@Html.LabelFor(model => model.ddAddBeneficiaryRelationShip, htmlAttributes: new { @id = "lblAddBenificiaryRship" })<br />@Html.DropDownListFor(model => model.ddAddBeneficiaryRelationShip, new SelectList(new[] { "<--Select-->" }), new { @class = "form-control" })</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">@Html.LabelFor(model => model.txtAddAgentName, htmlAttributes: new { @id = "lblAddAgentName" })<br />@Html.TextBoxFor(model => model.txtAddAgentName, htmlAttributes: new { @class = "form-control AddNamebox" })@Html.LabelFor(model => model.txtAgentnameMsg, htmlAttributes: new { @id = "txtAgentnameMsg" })</td>
+                                        <td>@Html.LabelFor(model => model.txtAddAgencyName, htmlAttributes: new { @id = "lblAddAgencyName" })<br />@Html.TextBoxFor(model => model.txtAddAgencyName, new { @class = "form-control" })@Html.LabelFor(model => model.txtAgentnameMsg, htmlAttributes: new { @id = "txtAgentnameMsg" })</td>
+                                        <td colspan="2">@Html.LabelFor(model => model.txtAddAgentPhone, htmlAttributes: new { @id = "lblAddAgentPhone" })<br />@Html.TextBoxFor(model => model.txtAddAgentPhone, htmlAttributes: new { @class = "form-control AddZipbox" })@Html.LabelFor(model => model.txtAgentnameMsg, htmlAttributes: new { @id = "txtAgentnameMsg",@style="visibility:hidden" })</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="divCancelbutton">
+                                <input type="button" value="Cancel" id="btnCanceltab6" class="btn btn-primary" />
+                                <input type="button" value="Previous" id="btnPrevtab6" data-id="5" class="btn btn-primary" />
+                                <input type="button" value="Next" id="btnNexttab6" data-id="7" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab7" role="tabpanel">
+                        <div class="Maindiv">
+                            <div class="divAdditionalReport">
+                                <fieldset class=border>
+                                    <legend>Additional Reports and Supplements</legend>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <label class="form-check-label">
+                                                    @Html.CheckBoxFor(model => model.chkAddRepBBR, new { @class = "form-check-input" })@Html.LabelFor(m => m.chkAddRepBBR, htmlAttributes: new { @id = "lblBBR" })
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label class="form-check-label">
+                                                    @Html.CheckBoxFor(model => model.chkAddRepCreditCheck, new { @class = "form-check-input" })@Html.LabelFor(m => m.chkAddRepCreditCheck, htmlAttributes: new { @id = "lblCC" })
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label class="form-check-label">
+                                                    @Html.CheckBoxFor(model => model.chkAddRepCriminalRec, new { @class = "form-check-input" })@Html.LabelFor(m => m.chkAddRepCriminalRec, htmlAttributes: new { @id = "lblCCR" })
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </fieldset>
+                                @Html.LabelFor(model => model.TxtAreaAdditionalRemark, htmlAttributes: new { @id = "lblAreaAdditionalRemark" })<br />
+                                @Html.TextAreaFor(model => model.TxtAreaAdditionalRemark, htmlAttributes: new { @class = "form-control AreaAdditionalRemarkbox" })
+                            </div>
+                            <div class="divCancelbutton">
+                                <input type="button" value="Cancel" id="btnCanceltab7" class="btn btn-primary" />
+                                <input type="button" value="Previous" id="btnPrevtab7" data-id="6" class="btn btn-primary" />
+                                <input type="button" value="Next" id="btnNexttab7" data-id="8" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab8" role="tabpanel">
+                        <div class="Maindiv">
+                            <div class="divOrder">
+                                <fieldset class="scheduler-border">
+                                    <legend class="scheduler-border">Select Account Option</legend>
+                                    <div class="radio">
+                                        <label>@Html.RadioButtonFor(model => model.rdorderEMSI, '1')@Html.LabelFor(model => model.rdorderEMSI, htmlAttributes: new { @id = "lblrdorderEMSI" })</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>@Html.RadioButtonFor(model => model.rdorderEMSI, '2')@Html.LabelFor(model => model.rdorderSelectquote, htmlAttributes: new { @id = "lblrdorderSelectquote" })</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>@Html.RadioButtonFor(model => model.rdorderEMSI, '3')@Html.LabelFor(model => model.rdorderRxreview, htmlAttributes: new { @id = "lblrdorderRxreview" })</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>@Html.RadioButtonFor(model => model.rdorderEMSI, '4')@Html.LabelFor(model => model.rdorderCorporateMarket, htmlAttributes: new { @id = "lblrdorderCorporateMarket" })</label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>@Html.RadioButtonFor(model => model.rdorderEMSI, '5')@Html.LabelFor(model => model.rdAigDirect, htmlAttributes: new { @id = "lblrdAigDirect" })</label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="textArea">
+                                @Html.LabelFor(model => model.txtareaorderSpecialinstr, new { @id = "lblareaorderSpecialinstr" })<br />
+                                @Html.TextAreaFor(model => model.txtareaorderSpecialinstr, htmlAttributes: new { @class = "form-control areaorderSpecialinstrbox" })<br />
+                                @Html.CheckBoxFor(model => model.chkorderRushorder)@Html.LabelFor(model => model.chkorderRushorder)
+                            </div>
+                            <div class="divCancelbutton">
+                                <input type="button" value="Cancel" id="btnCanceltab8" class="btn btn-primary" />
+                                <input type="button" value="Previous" id="btnPrevtab8" class="btn btn-primary" />
+                                <button type="button" id="btnSubmittab8" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">Submit Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            <!--My Modal-->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <table>
+                                <tr><td colspan="4">Type the message to the Doctor here -OR- select a message from the list.  (Note: 250 characters maximum per line):</td></tr>
+                                <tr>
+                                    <td colspan="3">@Html.DropDownListFor(model => model.ddDocInstructon, new SelectList(new[] { " " }), new { @class = "form-control" })</td>
+                                    <td><button class="btn btn-primary" id="btnEdit" style="padding: 5px 5px 5px 5px;"><i class="fa fa-pencil"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><input type="text" style="visibility:hidden" id="txtEdit" class="form-control"/></td>
+                                    <td colspan="2">
+                                        <input type="button" value="Add" id="btnDocAdd" class="btn btn-primary" />
+                                        <input type="button" value="Remove" id="btnDocRem" class="btn btn-primary" />
+                                    </td>
+                                </tr>
+                                <tr><td colspan="2">Instructions (Maximum of 99 lines or 8900 characters):</td></tr>
+                                <tr><td colspan="4">@Html.ListBoxFor(model => model.lstDocPopList, new SelectList(new[] { "" }), new { @class = "form-control" })</td></tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td>
+                                        <input type="button" value="Save" id="btnDocMsubmit" class="btn btn-primary" data-dismiss="modal" />
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>                        
+                    </div>
+                    <!-- Modal content end-->
+                </div>
+            </div>
+            <!--Model end-->
+
+        </div>
+    <input type="hidden" value="@ViewBag.Objid" id="myObjId" />     
+    <input type="hidden" value="@ViewBag.User" id="awdUser" />
+    <input type="hidden" value="@ViewBag.version" id="aVersion" />
+    <input type="hidden" value="@ViewBag.GUID" id="aGUID" />
+    @*</div>*@ 
+</body>
